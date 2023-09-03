@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App=()=>{
+  let [countrytext,setText]=useState("");
+  let [country,setData]=useState([]);
+  const displaycountries=()=>{
+    fetch(`http://disease.sh/v3/covid-19/countries/${countrytext}`)
+    .then((response)=>response.json())
+    .then((data)=>setData(data));
+    console.log(country);
+
+  }
+    return(
+        <div>
+            <input type="text" onChange={(event)=>setText(event.target.value)} />
+
+            <button onClick={displaycountries}>Output</button>
+
+            <div>
+                <p>{country.country}</p>
+                <p>{country.active}</p>
+                <p>{country.cases}</p>
+                <p>{country.recovered}</p>
+                <p>{country.tests}</p>
+            </div>
+        </div>
+    )
 }
-
 export default App;
